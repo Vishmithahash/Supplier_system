@@ -1,13 +1,7 @@
-<header class="app-bar">
-  <div class="app-brand">Purchase Orders</div>
-  <nav class="app-nav">
-    <a routerLink="/orders/new" class="link">Create</a>
-    <a routerLink="/orders" class="link active">View orders</a>
-  </nav>
-</header>
-
 <div class="container">
   <div class="card">
+    <h2 class="title">Purchase Orders</h2>
+
     <div class="toolbar">
       <input class="search" type="search" placeholder="Search by PO No or Supplier…"
              [(ngModel)]="q" />
