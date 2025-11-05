@@ -1,0 +1,66 @@
+<header class="app-bar">
+  <div class="app-brand">Purchase Orders</div>
+  <nav class="app-nav">
+    <a routerLink="/orders/new" class="link active">Create</a>
+    <a routerLink="/orders" class="link">View orders</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h2 class="title">Create Purchase Order</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form-grid">
+      <div class="field">
+        <label>PO No *</label>
+        <input type="text" formControlName="po_no" placeholder="PO-2025-0001" />
+      </div>
+
+      <div class="field">
+        <label>PO Date *</label>
+        <input type="date" formControlName="po_date" />
+      </div>
+
+      <div class="field">
+        <label>Supplier *</label>
+        <select formControlName="supplier_id">
+          <option [ngValue]="null">— Select supplier —</option>
+          <option *ngFor="let s of suppliers()" [value]="s.id">{{ s.name }}</option>
+        </select>
+      </div>
+
+      <div class="grid-full">
+        <div class="items-head">
+          <h3>Items</h3>
+          <button type="button" class="btn btn-ghost" (click)="addRow()">+ Add line</button>
+        </div>
+
+        <div class="table">
+          <div class="thead">
+            <div>Item code</div><div>Qty</div><div>Buy price</div><div>Line cost</div><div></div>
+          </div>
+
+          <div class="row" *ngFor="let g of items.controls; let i = index" [formGroup]="g">
+            <div><input type="text" formControlName="item_code" placeholder="RICE-25KG" /></div>
+            <div><input type="number" min="1" step="1" formControlName="qty" /></div>
+            <div><input type="number" min="0.01" step="0.01" formControlName="buy_price" /></div>
+            <div class="money">{{ lineCost(i) | number:'1.2-2' }}</div>
+            <div><button type="button" class="btn btn-ghost danger" (click)="removeRow(i)">Remove</button></div>
+          </div>
+        </div>
+
+        <div class="total">
+          <span>Preview total:</span>
+          <strong class="money">{{ totalPreview() | number:'1.2-2' }}</strong>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" type="submit" [disabled]="form.invalid || saving()">Save order</button>
+        <a class="btn" routerLink="/orders">Cancel</a>
+      </div>
+
+      <div class="error-banner" *ngIf="errorMsg()">{{ errorMsg() }}</div>
+    </form>
+  </div>
+</div>

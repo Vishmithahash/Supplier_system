@@ -1,0 +1,36 @@
+:host{
+  --brand-1:#2563eb; --brand-2:#8b5cf6; --brand-3:#22c55e;
+  --card:#fff; --border:#e5e7eb; --shadow:0 10px 30px rgba(15,23,42,.06);
+  --text:#0f172a; --muted:#475569; --ring:rgba(37,99,235,.18); --danger:#b91c1c;
+}
+.app-bar{position:sticky;top:0;z-index:10;padding:12px 20px;color:#fff;
+  background:linear-gradient(90deg,var(--brand-1),var(--brand-2),var(--brand-3));
+  border-bottom:1px solid rgba(255,255,255,.15);box-shadow:0 6px 18px rgba(2,6,23,.18);
+  display:flex;align-items:center;justify-content:space-between}
+.app-nav{display:flex;gap:10px}.link{color:#fff;text-decoration:none;opacity:.9;padding:6px 10px;border-radius:8px}
+.link:hover{opacity:1;background:rgba(255,255,255,.12)} .link.active{background:rgba(255,255,255,.2)}
+.container{max-width:1100px;margin:20px auto;padding:0 16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:20px;color:var(--text)}
+.title{margin:6px 0 18px;font-weight:800}
+
+.form-grid{display:grid;gap:16px;grid-template-columns:repeat(3, minmax(220px,1fr))}
+.grid-full{grid-column:1/-1}
+.field{display:grid;gap:8px} label{color:var(--muted)}
+input,select{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:#fff;color:var(--text)}
+input:focus,select:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 4px var(--ring)}
+.btn{padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer}
+.btn-primary{border:none;color:#fff;background:linear-gradient(135deg,#2563eb,#8b5cf6)}
+.btn-ghost{background:transparent} .btn.danger{color:var(--danger);border-color:#fecaca}
+
+.table{margin-top:8px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.thead,.row{display:grid;grid-template-columns:1.2fr .6fr .8fr .8fr .6fr;gap:10px;align-items:center;padding:10px}
+.thead{background:#f8fafc;color:#475569;font-weight:600;border-bottom:1px solid var(--border)}
+.row{background:#fff;border-bottom:1px solid var(--border)} .row:last-child{border-bottom:none}
+.money{font-weight:700}
+.total{display:flex;justify-content:flex-end;gap:10px;margin-top:10px;font-size:1.05rem}
+.actions{grid-column:1/-1;display:flex;gap:12px;justify-content:flex-end;margin-top:8px}
+
+@media (max-width:900px){
+  .form-grid{grid-template-columns:1fr}
+  .thead,.row{grid-template-columns:1fr .6fr .8fr .8fr .6fr}
+}

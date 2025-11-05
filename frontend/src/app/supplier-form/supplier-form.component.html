@@ -1,0 +1,93 @@
+<header class="app-bar">
+  <div class="app-brand">Suppliers</div>
+  <nav class="app-nav">
+    <a routerLink="/suppliers/new" class="link active">Create</a>
+    <a routerLink="/suppliers" class="link">View supplier list</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h2 class="title">Create Supplier</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form-grid">
+      
+      <!-- Error banner at top if needed -->
+      <div class="error-banner" *ngIf="errorMsg()">{{ errorMsg() }}</div>
+
+      <!-- Field 1: Name (full width) -->
+      <div class="field">
+        <label for="name">
+          Name <span class="req">*</span>
+        </label>
+        <input 
+          id="name" 
+          type="text" 
+          placeholder="e.g., Oceanic Foods Pvt Ltd" 
+          formControlName="name"
+          tabindex="1"
+        />
+        <small class="error" *ngIf="invalid('name')">
+          Name is required (≤ 150 chars).
+        </small>
+      </div>
+
+      <!-- Field 2: Phone -->
+      <div class="field">
+        <label for="phone">
+          Phone <span class="muted">(10 digits)</span>
+        </label>
+        <input
+          id="phone"
+          type="text"
+          inputmode="numeric"
+          maxlength="10"
+          placeholder="0771234567"
+          formControlName="phone"
+          (input)="digitsOnly($event)"
+          tabindex="2"
+        />
+        <div class="inline">
+          <small class="hint">{{ form.controls.phone.value?.length || 0 }}/10</small>
+          <small class="error" *ngIf="invalid('phone')">Phone must be exactly 10 digits.</small>
+        </div>
+      </div>
+
+      <!-- Field 3: Email -->
+      <div class="field">
+        <label for="email">Email</label>
+        <input 
+          id="email" 
+          type="email" 
+          placeholder="hello@company.lk" 
+          formControlName="email"
+          tabindex="3"
+        />
+        <small class="error" *ngIf="invalid('email')">
+          Enter a valid email (≤ 120 chars).
+        </small>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button 
+          class="btn btn-ghost" 
+          type="button" 
+          (click)="form.reset(); submitted=false"
+          tabindex="5"
+        >
+          Clear
+        </button>
+        <button 
+          class="btn btn-primary" 
+          type="submit" 
+          [disabled]="form.invalid || loading()"
+          tabindex="4"
+        >
+          Save
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

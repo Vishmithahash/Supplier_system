@@ -1,0 +1,55 @@
+<header class="app-bar">
+  <div class="app-brand">Purchase Orders</div>
+  <nav class="app-nav">
+    <a routerLink="/orders/new" class="link">Create</a>
+    <a routerLink="/orders" class="link active">View orders</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="card">
+    <div class="toolbar">
+      <input class="search" type="search" placeholder="Search by PO No or Supplier…"
+             [(ngModel)]="q" />
+      <div class="spacer"></div>
+      <button class="btn" (click)="fetch()" [disabled]="loading()">Refresh</button>
+    </div>
+
+    <div *ngFor="let o of filtered" class="order-card">
+      <div class="order-head">
+        <div class="head-left">
+          <div class="po">#{{ o.id }} • <strong>{{ o.po_no }}</strong></div>
+          <div class="meta">Date: {{ o.po_date }} • Supplier: <strong>{{ o.supplier?.name || o.supplier_id }}</strong></div>
+        </div>
+        <div class="head-right">
+          <div class="total">Total: <strong class="money">{{ o.total_cost | number:'1.2-2' }}</strong></div>
+          <button class="btn btn-ghost" (click)="toggle(o.id)">
+            {{ expanded().has(o.id) ? 'Hide items' : 'View items' }}
+          </button>
+        </div>
+      </div>
+
+      <div class="items" *ngIf="expanded().has(o.id)">
+        <div class="table">
+          <div class="thead">
+            <div>#</div><div>Item code</div><div>Qty</div><div>Buy price</div><div>Line cost</div>
+          </div>
+          <div class="row" *ngFor="let it of o.items; let i = index">
+            <div>{{ i + 1 }}</div>
+            <div class="ellipsis">{{ it.item_code }}</div>
+            <div>{{ it.qty }}</div>
+            <div class="money">{{ it.buy_price | number:'1.2-2' }}</div>
+            <div class="money">{{ it.line_cost  | number:'1.2-2' }}</div>
+          </div>
+          <div class="row total-row">
+            <div></div><div></div><div></div>
+            <div class="label">TOTAL</div>
+            <div class="money">{{ o.total_cost | number:'1.2-2' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty" *ngIf="!filtered.length && !loading()">No orders found.</div>
+  </div>
+</div>

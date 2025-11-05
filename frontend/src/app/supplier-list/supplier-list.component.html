@@ -1,0 +1,36 @@
+<header class="app-bar">
+  <div class="app-brand">Supplier List</div>
+  <nav class="app-nav">
+    <a routerLink="/suppliers/new" class="link">Create</a>
+    <a routerLink="/suppliers" class="link active">View supplier list</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="card">
+    <div class="toolbar">
+      <input class="search" type="search" placeholder="Search by name, phone, email…"
+             [ngModel]="q()" (ngModelChange)="q.set($event)" />
+      <div class="spacer"></div>
+      <button class="btn" (click)="fetch()" [disabled]="loading()">Refresh</button>
+    </div>
+
+    <div class="table" [class.dim]="loading()">
+      <div class="thead">
+        <div>#</div>
+        <div>Name</div>
+        <div>Phone</div>
+        <div>Email</div>
+      </div>
+
+      <div class="row" *ngFor="let s of filtered">
+        <div>{{ s.id }}</div>
+        <div class="ellipsis">{{ s.name }}</div>
+        <div>{{ s.phone || '—' }}</div>
+        <div class="ellipsis">{{ s.email || '—' }}</div>
+      </div>
+
+      <div class="empty" *ngIf="!filtered.length && !loading()">No results.</div>
+    </div>
+  </div>
+</div>
